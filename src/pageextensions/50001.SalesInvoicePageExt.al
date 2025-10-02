@@ -10,4 +10,21 @@ pageextension 50100 "Sales Invoice Ext" extends "Sales Invoice"
             }
         }
     }
+    actions
+    {
+        addlast(processing)
+        {
+            action(FetchHeaderInfo)
+            {
+                Caption = 'Fetch Header Info';
+                ApplicationArea = All;
+                Image = Import;
+
+                trigger OnAction()
+                begin
+                    Message('This is the Ext Company Button');
+                end;
+            }
+        }
+    }
 }
