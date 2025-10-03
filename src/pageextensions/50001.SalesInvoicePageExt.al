@@ -22,7 +22,7 @@ pageextension 50100 "Sales Invoice Ext" extends "Sales Invoice"
 
                 trigger OnAction()
                 var
-                    Fetcher: Codeunit "Dummy JSON API Manager";
+                    Fetcher: Codeunit "DummyJSON API Manager";
                     CompanyName: Text;
                 begin
                     CompanyName := Fetcher.GetRandomCompanyName();

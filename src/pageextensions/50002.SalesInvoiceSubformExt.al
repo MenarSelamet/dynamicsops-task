@@ -23,8 +23,11 @@ pageextension 50101 "Sales Invoice Subform Ext" extends "Sales Invoice Subform"
                 Image = Import;
 
                 trigger onAction()
+                var
+                    IBAN: Text;
                 begin
                     Message('This is the Ext IBAN Button');
+                    Rec."Ext IBAN" := 'DE89370400440532013000';
                 end;
             }
         }

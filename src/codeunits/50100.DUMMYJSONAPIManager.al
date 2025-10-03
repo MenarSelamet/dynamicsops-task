@@ -1,4 +1,4 @@
-codeunit 50100 "Dummy JSON API Manager"
+codeunit 50100 "DummyJSON API Manager"
 {
     procedure GetRandomCompanyName(): Text
     var
@@ -38,4 +38,5 @@ codeunit 50100 "Dummy JSON API Manager"
         exit(CompanyName);
 
     end;
+
 }
