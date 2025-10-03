@@ -21,8 +21,15 @@ pageextension 50100 "Sales Invoice Ext" extends "Sales Invoice"
                 Image = Import;
 
                 trigger OnAction()
+                var
+                    Fetcher: Codeunit "Dummy JSON API Manager";
+                    CompanyName: Text;
                 begin
-                    Message('This is the Ext Company Button');
+                    CompanyName := Fetcher.GetRandomCompanyName();
+                    if CompanyName <> '' then
+                        Message('Random Company: %1', CompanyName)
+                    else
+                        Message('Could not fetch company name');
                 end;
             }
         }
