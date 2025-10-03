@@ -27,9 +27,8 @@ pageextension 50100 "Sales Invoice Ext" extends "Sales Invoice"
                 begin
                     CompanyName := Fetcher.GetRandomCompanyName();
                     if CompanyName <> '' then
-                        Message('Random Company: %1', CompanyName)
-                    else
-                        Message('Could not fetch company name');
+                        Rec."Ext Company Name" := CompanyName;
+                    Rec.Modify(true);
                 end;
             }
         }
