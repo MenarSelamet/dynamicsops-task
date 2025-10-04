@@ -41,4 +41,20 @@ page 50100 "DummyJSONAPISetup"
             }
         }
     }
+    actions
+    {
+        area(processing)
+        {
+            action(GetToken)
+            {
+                Caption = 'Get Token';
+                ApplicationArea = All;
+
+                trigger onAction()
+                begin
+                    Message('This is a placeholder for the get Token Action');
+                end;
+            }
+        }
+    }
 }
