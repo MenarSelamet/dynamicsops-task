@@ -21,7 +21,12 @@ table 50100 "DummyJSONAPISetup"
             Caption = 'Token';
             Editable = false;
         }
-        field(5; "Use Authentication"; Boolean)
+        field(5; "Token Expiry"; DateTime)
+        {
+            Caption = 'Token Expiry';
+            Editable = false;
+        }
+        field(6; "Use Authentication"; Boolean)
         {
             Caption = 'Use Authentication';
         }
