@@ -48,7 +48,7 @@ page 50100 "DummyJSON API Setup"
                 {
                     ApplicationArea = All;
                     Editable = false;
-                }   
+                }
             }
         }
     }
@@ -89,12 +89,12 @@ page 50100 "DummyJSON API Setup"
                         Message('Connection failed.');
                 end;
             }
-           action("Debug Login")
+            action("Debug Login")
             {
-               ApplicationArea = All;
-               Caption = 'Debug Login';
-               ToolTip = 'Debug the login response to see actual API response';
-               Image = Debug;
+                ApplicationArea = All;
+                Caption = 'Debug Login';
+                ToolTip = 'Debug the login response to see actual API response';
+                Image = Debug;
 
                 trigger OnAction()
                 var
@@ -102,16 +102,32 @@ page 50100 "DummyJSON API Setup"
                 begin
                     DebugHelper.DebugLoginResponse();
                 end;
-            } 
+            }
+            action("Reset Token")
+            {
+                ApplicationArea = All;
+                Caption = 'Reset Token';
+                ToolTip = 'Clear the current token and expiry date';
+                Image = ClearLog;
+
+                trigger OnAction()
+                var
+                    DummyJSONMgt: Codeunit "DummyJSON API Manager";
+                begin
+                    DummyJSONMgt.ResetToken();
+                    CurrPage.Update();
+                    Message('Token has been reset.');
+                end;
+            }
         }
     }
 
-    // trigger OnOpenPage()
-    // begin
-    //     if not Rec.Get() then begin
-    //         Rec.Init();
-    //         Rec."Base URL" := 'https://dummyjson.com';
-    //         Rec.Insert();
-    //     end;
-    // end;
+    trigger OnOpenPage()
+    begin
+        if not Rec.Get() then begin
+            Rec.Init();
+            Rec."Base URL" := 'https://dummyjson.com';
+            Rec.Insert();
+        end;
+    end;
 }

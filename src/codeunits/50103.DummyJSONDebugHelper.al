@@ -10,6 +10,11 @@ codeunit 50103 "DummyJSON Debug Helper"
         Headers: HttpHeaders;
         RequestBody: Text;
         ResponseText: Text;
+        JsonObject: JsonObject;
+        JsonToken: JsonToken;
+        i: Integer;
+        KeyName: Text;
+        KeyValue: Text;
     begin
         if not APISetup.Get() then
             exit;
@@ -26,7 +31,24 @@ codeunit 50103 "DummyJSON Debug Helper"
 
         if Client.Send(Request, Response) then begin
             Response.Content.ReadAs(ResponseText);
-            Message('Response: %1\\n\\nStatus: %2', ResponseText, Response.HttpStatusCode);
+
+            if JsonObject.ReadFrom(ResponseText) then begin
+                KeyValue := StrSubstNo('Status: %1\\n\\nFull Response:\\n%2\\n\\nJSON Properties:\\n',
+                              Response.HttpStatusCode, ResponseText);
+
+                if JsonObject.Get('token', JsonToken) then
+                    KeyValue += StrSubstNo('token: %1\\n', JsonToken.AsValue().AsText());
+                if JsonObject.Get('accessToken', JsonToken) then
+                    KeyValue += StrSubstNo('accessToken: %1\\n', JsonToken.AsValue().AsText());
+                if JsonObject.Get('access_token', JsonToken) then
+                    KeyValue += StrSubstNo('access_token: %1\\n', JsonToken.AsValue().AsText());
+                if JsonObject.Get('Token', JsonToken) then
+                    KeyValue += StrSubstNo('Token: %1\\n', JsonToken.AsValue().AsText());
+
+                Message(KeyValue);
+            end else begin
+                Message('Status: %1\\n\\nResponse (non-JSON):\\n%2', Response.HttpStatusCode, ResponseText);
+            end;
         end else begin
             Message('Failed to send request');
         end;
