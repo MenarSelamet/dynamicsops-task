@@ -23,4 +23,5 @@ page 50101 "Customer User Mapping List"
             }
         }
     }
+
 }
