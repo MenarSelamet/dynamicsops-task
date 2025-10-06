@@ -51,14 +51,14 @@ codeunit 50104 "DummyJSON API Manager"
         if not JsonObject.ReadFrom(ResponseText) then
             Error(APIRequestErr, 'Invalid JSON response: ' + CopyStr(ResponseText, 1, 200));
 
-        if TryGetTokenFromJson(JsonObject, 'token', Token) then
-            if TryGetTokenFromJson(JsonObject, 'accessToken', Token) then
-                if TryGetTokenFromJson(JsonObject, 'access_token', Token) then
-                    if TryGetTokenFromJson(JsonObject, 'Token', Token) then
-                        Error(APIRequestErr, 'Token not found in response. Check debug for actual response structure.');
+        if not (TryGetTokenFromJson(JsonObject, 'token', Token) or
+         TryGetTokenFromJson(JsonObject, 'accessToken', Token) or
+         TryGetTokenFromJson(JsonObject, 'access_token', Token) or
+         TryGetTokenFromJson(JsonObject, 'Token', Token)) then
+            Error(APIRequestErr, 'Token not found in response.');
 
         APISetup.Token := Token;
-        APISetup."Token Expiry" := CurrentDateTime() + 3600000;
+        APISetup."Token Expiry" := CurrentDateTime() + 3600000; // 1 hour
         APISetup.Modify();
 
         exit(Token);
