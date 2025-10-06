@@ -22,14 +22,20 @@ pageextension 50100 "Sales Invoice Ext" extends "Sales Invoice"
 
                 trigger OnAction()
                 var
-                    Fetcher: Codeunit "DummyJSON API Manager";
+                    DummyJSONMgt: Codeunit "DummyJSON API Manager";
                     CompanyName: Text;
+                    IBAN: Text;
+                    UserId: Integer;
                 begin
-                    CompanyName := Fetcher.GetRandomCompanyName();
-                    if CompanyName <> '' then
-                        Rec."Ext Company Name" := CompanyName;
-                    Rec.Modify(true);
+                    UserId := DummyJSONMgt.GetUserIdFromCustomer(Rec."Sell-to Customer No.");
+                    DummyJSONMgt.GetUserData(UserId, CompanyName, IBAN);
+
+                    Rec."Ext Company Name" := CopyStr(CompanyName, 1, MaxStrLen(Rec."Ext Company Name"));
+                    Rec.Modify();
+
+                    Message('Header information fetched successfully.');
                 end;
+
             }
         }
     }

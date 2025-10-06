@@ -22,13 +22,22 @@ pageextension 50101 "Sales Invoice Subform Ext" extends "Sales Invoice Subform"
                 ApplicationArea = All;
                 Image = Import;
 
-                trigger onAction()
+                trigger OnAction()
                 var
+                    DummyJSONMgt: Codeunit "DummyJSON API Manager";
+                    CompanyName: Text;
                     IBAN: Text;
+                    UserId: Integer;
                 begin
-                    Message('This is the Ext IBAN Button');
-                    Rec."Ext IBAN" := 'DE89370400440532013000';
+                    UserId := DummyJSONMgt.GetUserIdFromCustomer(Rec."Sell-to Customer No.");
+                    DummyJSONMgt.GetUserData(UserId, CompanyName, IBAN);
+
+                    Rec."Ext IBAN" := CopyStr(IBAN, 1, MaxStrLen(Rec."Ext IBAN"));
+                    Rec.Modify();
+
+                    Message('Line information fetched successfully.');
                 end;
+
             }
         }
     }

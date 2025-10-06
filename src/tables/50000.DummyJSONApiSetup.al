@@ -1,4 +1,4 @@
-table 50100 "DummyJSONAPISetup"
+table 50123 "DummyJSONAPISetup"
 {
     DataClassification = ToBeClassified;
 
@@ -8,6 +8,7 @@ table 50100 "DummyJSONAPISetup"
         {
             Caption = 'Code';
             DataClassification = CustomerContent;
+
         }
         field(2; "Base URL"; Text[250])
         {
@@ -39,12 +40,9 @@ table 50100 "DummyJSONAPISetup"
 
     keys
     {
-        key(PK; "Base URL")
+        key(PK; Code)
         {
             Clustered = true;
         }
     }
-
-
-
 }

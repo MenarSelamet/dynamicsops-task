@@ -7,6 +7,7 @@ table 50103 "CustomerUserMapping"
         field(1; "Customer No."; Code[20])
         {
             Caption = 'Customer No.';
+            TableRelation = Customer."No.";
         }
         field(2; "DummyJSON User ID"; Integer)
         {

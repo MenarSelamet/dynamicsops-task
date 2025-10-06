@@ -1,13 +1,14 @@
-page 50102 "Customer User Mapping"
+page 50101 "Customer User Mapping List"
 {
     PageType = List;
     ApplicationArea = All;
     UsageCategory = Lists;
-    SourceTable = CustomerUserMapping;
+    SourceTable = "CustomerUserMapping";
+    Caption = 'Customer User Mapping';
 
     layout
     {
-        area(content)
+        area(Content)
         {
             repeater(Group)
             {
@@ -15,12 +16,11 @@ page 50102 "Customer User Mapping"
                 {
                     ApplicationArea = All;
                 }
-                field("DummyJSON User ID"; Rec."DummyJSON User ID")
+                field("DummyJSON User Id"; Rec."DummyJSON User Id")
                 {
                     ApplicationArea = All;
                 }
             }
         }
-
     }
 }
