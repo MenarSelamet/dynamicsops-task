@@ -37,22 +37,6 @@ pageextension 50100 "Sales Invoice Ext" extends "Sales Invoice"
                 end;
 
             }
-            action("Debug User Data")
-            {
-                ApplicationArea = All;
-                Caption = 'Debug User Data';
-                ToolTip = 'Debug the user data fetch for this customer';
-                Image = Debug;
-
-                trigger OnAction()
-                var
-                    DummyJSONMgt: Codeunit "DummyJSON API Manager";
-                    UserId: Integer;
-                begin
-                    UserId := DummyJSONMgt.GetUserIdFromCustomer(Rec."Sell-to Customer No.");
-                    DummyJSONMgt.DebugUserData(UserId);
-                end;
-            }
         }
     }
 }

@@ -58,7 +58,7 @@ codeunit 50104 "DummyJSON API Manager"
                         Error(APIRequestErr, 'Token not found in response. Check debug for actual response structure.');
 
         APISetup.Token := Token;
-        APISetup."Token Expiry" := CurrentDateTime() + 3600000; // 1 hour
+        APISetup."Token Expiry" := CurrentDateTime() + 3600000;
         APISetup.Modify();
 
         exit(Token);
@@ -157,48 +157,4 @@ codeunit 50104 "DummyJSON API Manager"
 
         Error(CannotFindMappingErr, CustomerNo);
     end;
-
-    procedure ResetToken()
-    var
-        APISetup: Record "DummyJSONAPISetup";
-    begin
-        if APISetup.Get() then begin
-            APISetup.Token := '';
-            APISetup."Token Expiry" := 0DT;
-            APISetup.Modify();
-        end;
-    end;
-
-    procedure DebugUserData(UserId: Integer)
-    var
-        APISetup: Record "DummyJSONAPISetup";
-        Client: HttpClient;
-        Request: HttpRequestMessage;
-        Response: HttpResponseMessage;
-        Headers: HttpHeaders;
-        ResponseText: Text;
-        Token: Text;
-    begin
-        if not APISetup.Get() then
-            exit;
-
-        Token := GetBearerToken();
-
-        Request.Method := 'GET';
-        Request.SetRequestUri(StrSubstNo('%1/users/%2', APISetup."Base URL", UserId));
-
-        if Token <> '' then begin
-            Request.GetHeaders(Headers);
-            Headers.Add('Authorization', StrSubstNo('Bearer %1', Token));
-        end;
-
-        if Client.Send(Request, Response) then begin
-            Response.Content.ReadAs(ResponseText);
-            Message('User ID: %1\\nStatus: %2\\nResponse: %3', UserId, Response.HttpStatusCode, ResponseText);
-        end else begin
-            Message('Failed to send request for User ID: %1', UserId);
-        end;
-    end;
-
-
 }

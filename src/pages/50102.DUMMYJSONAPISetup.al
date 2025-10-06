@@ -71,57 +71,8 @@ page 50100 "DummyJSON API Setup"
                     CurrPage.Update();
                 end;
             }
-            action("Test Connection")
-            {
-                ApplicationArea = All;
-                Caption = 'Test Connection';
-                Image = TestDatabase;
-
-                trigger OnAction()
-                var
-                    DummyJSONMgt: Codeunit "DummyJSON API Manager";
-                    CompanyName: Text;
-                    IBAN: Text;
-                begin
-                    if DummyJSONMgt.GetUserData(1, CompanyName, IBAN) then
-                        Message('Connection successful! Company: %1, IBAN: %2', CompanyName, IBAN)
-                    else
-                        Message('Connection failed.');
-                end;
-            }
-            action("Debug Login")
-            {
-                ApplicationArea = All;
-                Caption = 'Debug Login';
-                ToolTip = 'Debug the login response to see actual API response';
-                Image = Debug;
-
-                trigger OnAction()
-                var
-                    DebugHelper: Codeunit "DummyJSON Debug Helper";
-                begin
-                    DebugHelper.DebugLoginResponse();
-                end;
-            }
-            action("Reset Token")
-            {
-                ApplicationArea = All;
-                Caption = 'Reset Token';
-                ToolTip = 'Clear the current token and expiry date';
-                Image = ClearLog;
-
-                trigger OnAction()
-                var
-                    DummyJSONMgt: Codeunit "DummyJSON API Manager";
-                begin
-                    DummyJSONMgt.ResetToken();
-                    CurrPage.Update();
-                    Message('Token has been reset.');
-                end;
-            }
         }
     }
-
     trigger OnOpenPage()
     begin
         if not Rec.Get() then begin
